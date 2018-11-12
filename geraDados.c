@@ -2,15 +2,19 @@
 #include <stdio.h>
 #include <time.h>
 
-//definida a quantidade de repetições de cada campo
+//quantidade de repetições de cada campo
 #define REPEAT_FIELD1 0.3f
 #define REPEAT_FIELD2 0.25f
 #define REPEAT_FIELD3 0.2f
 #define REPEAT_FIELD4 0.15f
 
+//tamanho de cada campo
 #define LEN_FIELD2 30
 #define LEN_FIELD3 20
 #define LEN_FIELD4 10
+
+//codigos de erro padrão
+#define ERROR_FOPEN 1
 
 typedef struct {
 	unsigned int campo1;
@@ -19,42 +23,39 @@ typedef struct {
 	char campo4[LEN_FIELD4];
 } registro;
 
-typedef char bool;
+//tipo de dados auxiliar
+typedef char byte;
 #define TRUE '\1';
 #define FALSE 0;
 
-registro lastRecord;
-registro curRecord;
+registro lastRecord; //ultimo registro salvo em arquivo
+registro curRecord; //registro a ser salvo em arquivo
 
-bool isFirstRecord;
-int status;
-
+byte isFirstRecord; //marca se o registro sendo gerado é o primeiro (impossível repetir campos)
+int status; //cabeçalho do arquivo
 
 FILE* fout;
-
 FILE* fruas;
 unsigned int cruas;
-
 FILE* fbairros;
 unsigned int cbairros;
 
-int main() {
-	genDataFile(4000,"out.bin");
-	return 0;
-}
-
 int genDataFile(int n, char* filename) {
-	srand(time(NULL));
+	srand(time(NULL)); //Inicializa a seed do PRNG
 
+	//Abre os arquivos de dados base e de saída. 
 	fout = fopen(filename, "wb");
+	fruas = fopen("ruas.bin", "rb");
+	fbairros = fopen("bairros.bin", "rb");
+	if (!fout || !fruas || !fbairros) return ERROR_FOPEN;
+
+	//Le os cabeçalhos dos arquivos base
+	fread(&cruas, 4, 1, fruas);
+	fread(&cbairros, 4, 1, fbairros);
+
+	//Marca o cabeçalho do arquivo de saída com status 0
 	status = 0;
 	fwrite(&status, 4, 1, fout);
-
-	fruas = fopen("ruas.bin", "rb");
-	fread(&cruas, 4, 1, fruas);
-
-	fbairros = fopen("bairros.bin", "rb");
-	fread(&cbairros, 4, 1, fbairros);
 
 	isFirstRecord = TRUE;
 
@@ -64,12 +65,14 @@ int genDataFile(int n, char* filename) {
 		genField3();
 		genField4();
 		
+		//salva o registro no arquivo
 		fwrite(&curRecord, sizeof(registro), 1, fout);
 
 		lastRecord = curRecord;
 		isFirstRecord = FALSE;
 	}
 
+	//escreve o status 1 no cabeçalho do arquivo e fecha todos os arquivos
 	status = 1;
 	rewind(fout);
 	fwrite(&status, 4, 1, fout);
