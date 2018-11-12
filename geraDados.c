@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include "registro.h"
 
 //quantidade de repetições de cada campo
 #define REPEAT_FIELD1 0.3f
@@ -8,20 +9,8 @@
 #define REPEAT_FIELD3 0.2f
 #define REPEAT_FIELD4 0.15f
 
-//tamanho de cada campo
-#define LEN_FIELD2 30
-#define LEN_FIELD3 20
-#define LEN_FIELD4 10
-
 //codigos de erro padrão
 #define ERROR_FOPEN 1
-
-typedef struct {
-	unsigned int campo1;
-	char campo2[LEN_FIELD2];
-	char campo3[LEN_FIELD3];
-	char campo4[LEN_FIELD4];
-} registro;
 
 //tipo de dados auxiliar
 typedef char byte;
