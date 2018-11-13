@@ -1,3 +1,5 @@
+#pragma once
+
 //tamanho de cada campo
 #define LEN_FIELD2 30
 #define LEN_FIELD3 20
