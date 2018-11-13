@@ -29,8 +29,8 @@ int regcmp(const void *a, const void *b) {
 
 int datecmp(const char *a, const char *b) {
 	short int da, db, ma, mb, ya, yb;
-	sscanf(a, "%2d/%2d/%4d", da, ma, ya);
-	sscanf(b, "%2d/%2d/%4d", db, mb, yb);
+	sscanf(a, "%2hd/%2hd/%4hd", &da, &ma, &ya);
+	sscanf(b, "%2hd/%2hd/%4hd", &db, &mb, &yb);
 	short int dif;
 	if (dif = (ya - yb)) return dif;
 	if (dif = (ma - mb)) return dif;
