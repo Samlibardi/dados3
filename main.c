@@ -4,6 +4,7 @@
 #include "geraDados.h"
 #include "listaDados.h"
 #include "ordenaInterna.h"
+#include "merge.h"
 
 #define ERROR_ARG 1
 
@@ -48,6 +49,30 @@ int main(int argc, char** argv) {
 	else if (!strcmp(argv[1], "3")) {
 		if (argc < 4) return ERROR_ARG;
 		if (err = !ordenaInterna(argv[2],argv[3])) {
+			printf("Arquivo gerado.\n");
+			return 0;
+		}
+		else {
+			printf("Falha no processamento.\n");
+			return err;
+		}
+	}
+
+	else if (!strcmp(argv[1], "4")) {
+		if (argc < 5) return ERROR_ARG;
+		if (err = !merge(2, argv + 2, argv[4])) {
+			printf("Arquivo gerado.\n");
+			return 0;
+		}
+		else {
+			printf("Falha no processamento.\n");
+			return err;
+		}
+	}
+
+	else if (!strcmp(argv[1], "6")) {
+		if (argc < 5) return ERROR_ARG;
+		if (err = !merge(argc-3, argv + 2, argv[argc-1])) {
 			printf("Arquivo gerado.\n");
 			return 0;
 		}
