@@ -12,6 +12,10 @@ int err;
 int main(int argc, char** argv) {
 	if (argc < 2) return ERROR_ARG;
 
+	// Processar parametros de entrada do programa
+
+
+	// Comando 1
 	if (!strcmp(argv[1],"1")) {
 		if (argc < 4) return ERROR_ARG;
 		if (err = !genDataFile(atoi(argv[3]), argv[2])) {
@@ -23,7 +27,8 @@ int main(int argc, char** argv) {
 			return err;
 		}
 	}
-
+	
+	// Comando 2
 	else if (!strcmp(argv[1], "2")) {
 		if (argc < 3) return ERROR_ARG;
 		if (err = !listaDados(argv[2])) {
@@ -39,6 +44,7 @@ int main(int argc, char** argv) {
 		}
 	}
 
+	// Comando 3
 	else if (!strcmp(argv[1], "3")) {
 		if (argc < 4) return ERROR_ARG;
 		if (err = !ordenaInterna(argv[2],argv[3])) {

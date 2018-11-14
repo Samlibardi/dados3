@@ -49,6 +49,7 @@ int genDataFile(int n, char* filename) {
 	isFirstRecord = TRUE;
 
 	for (int i = 0; i < n; i++) {
+		//gera os campos
 		genField1();
 		genField2();
 		genField3();
@@ -57,7 +58,7 @@ int genDataFile(int n, char* filename) {
 		//salva o registro no arquivo
 		fwrite(&curRecord, sizeof(registro), 1, fout);
 
-		lastRecord = curRecord;
+		lastRecord = curRecord; //mantém o ultimo registro salvo em disco para referencia
 		isFirstRecord = FALSE;
 	}
 
@@ -65,57 +66,66 @@ int genDataFile(int n, char* filename) {
 	status = 1;
 	rewind(fout);
 	fwrite(&status, 4, 1, fout);
-
 	fclose(fruas);
 	fclose(fbairros);
 	fclose(fout);
 	return 0;
 }
 
+//Gera o campo 1
 int genField1() {
+	//Caso seja determinado que o valor deve ser repetido, copiar o valor do ultimo registro salvo
 	if (!isFirstRecord && rand() / (float)RAND_MAX < REPEAT_FIELD1) {
 		curRecord.campo1 = lastRecord.campo1;
 		return 0;
 	}
 	
-	curRecord.campo1 = rand() % 49999 + 1;
+	curRecord.campo1 = rand() % 49999 + 1; //gera um numero aleatório entre 1 e 50000
 	return 0;
 }
 
+//Gera o campo 2
 int genField2() {
+	//Caso seja determinado que o valor deve ser repetido, copiar o valor do ultimo registro salvo
 	if (!isFirstRecord && rand() / (float)RAND_MAX < REPEAT_FIELD2) {
 		strcpy(curRecord.campo2,lastRecord.campo2);
 		return 0;
 	}
 
+	//le um registro aleatório do arquivo de nomes de ruas
 	fseek(fruas, rand() % cruas * 30 + 4, SEEK_SET);
 	fread(curRecord.campo2, LEN_FIELD2, 1, fruas);
 
 	return 0;
 }
 
+//Gera o campo 3
 int genField3() {
+	//Caso seja determinado que o valor deve ser repetido, copiar o valor do ultimo registro salvo
 	if (!isFirstRecord && rand() / (float)RAND_MAX < REPEAT_FIELD3) {
 		strcpy(curRecord.campo3, lastRecord.campo3);
 		return 0;
 	}
 
+	//le um registro aleatório do arquivo de nomes de bairros
 	fseek(fruas, rand() % cruas * 30 + 4, SEEK_SET);
 	fread(curRecord.campo3, LEN_FIELD3, 1, fbairros);
 
 	return 0;
 }
 
+//Gera o campo 4
 int genField4() {
+	//Caso seja determinado que o valor deve ser repetido, copiar o valor do ultimo registro salvo
 	if (!isFirstRecord && rand() / (float)RAND_MAX < REPEAT_FIELD4) {
 		strcpy(curRecord.campo4, lastRecord.campo4);
 		return 0;
 	}
 
-	time_t t = rand() % 48 * (time_t)31536000;
+	time_t t = rand() % 48 * (time_t)31536000; //gera um tempo aleatório
 	char buffer[11];
-	strftime(buffer, sizeof(buffer), "%d/%m/%Y", localtime(&t));
-	memcpy(curRecord.campo4, buffer, LEN_FIELD4);
+	strftime(buffer, sizeof(buffer), "%d/%m/%Y", localtime(&t)); //converte o tempo para o formato de data
+	memcpy(curRecord.campo4, buffer, LEN_FIELD4); //salva no registro
 
 	return 0;
 }
