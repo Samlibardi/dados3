@@ -86,8 +86,7 @@ int main(int argc, char** argv) {
 
 	else if (!strcmp(argv[1], "7")) {
 		if (argc < 4) return ERROR_ARG;
-		
-		if (argc < 4) return ERROR_ARG;
+
 		if (err = !ordenaExterna(argv[2], argv[3])) {
 			printf("Arquivo gerado.\n");
 			return 0;

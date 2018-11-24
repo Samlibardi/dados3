@@ -1,6 +1,7 @@
 #include "registro.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 //Funçao de comparação entre registros a e b, de acordo com as especificações do projeto
 int regcmp(const void *a, const void *b) {
@@ -9,8 +10,8 @@ int regcmp(const void *a, const void *b) {
 
 	int dif;
 	if (dif = (ra.campo1 - rb.campo1)) return dif;
-	if (dif = strcmp(ra.campo2, rb.campo2)) return dif;
-	if (dif = strcmp(ra.campo3, rb.campo3)) return dif;
+	if (dif = strncmp(ra.campo2, rb.campo2, LEN_FIELD2)) return dif;
+	if (dif = strncmp(ra.campo3, rb.campo3, LEN_FIELD3)) return dif;
 	dif = datecmp(ra.campo4, rb.campo4); return dif;
 }
 
