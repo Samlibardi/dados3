@@ -13,16 +13,24 @@ FILE* fdest;
 registro* recordsv;
 
 int merge(const int srcc, const char** srcnamev, char* destname) {
-	const FILE** srcv = (FILE**)srcnamev;
-	recordsv = malloc(sizeof(registro) * srcc);
+	const FILE** srcv = malloc(sizeof(FILE*) * srcc);
+	const registro* recordsv = malloc(sizeof(registro) * srcc);
 	int srco = srcc;
 	for (int i = 0; i < srcc; i++) {
 		srcv[i] = fopen(srcnamev[i], "rb"); //Abre o arquivo de origem como leitura
 		
 		//Checa se o arquivo foi aberto e se o status é valido
-		if (!srcv[i]) return ERROR_FOPEN;
+		if (!srcv[i]) {
+			free(recordsv);
+			free(srcv);
+			return ERROR_FOPEN;
+		}
 		fread(&status, 4, 1, srcv[i]);
-		if (!status) return ERROR_STATUS;
+		if (!status) {
+			free(recordsv);
+			free(srcv);
+			return ERROR_STATUS;
+		}
 
 		//carrega o primeiro registro no vetor
 		fread(recordsv + i, sizeof(registro), 1, srcv[i]);
@@ -54,6 +62,7 @@ int merge(const int srcc, const char** srcnamev, char* destname) {
 	fwrite(&status, sizeof(int), 1, fdest);
 	fclose(fdest);
 	free(recordsv);
+	free(srcv);
 
 	return 0;
 }

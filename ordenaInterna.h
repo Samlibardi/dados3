@@ -1,3 +1,3 @@
 #pragma once
 
-int ordenaInterna(char* filename);
+int ordenaInterna(char* srcname, char* destname);
