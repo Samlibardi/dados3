@@ -5,10 +5,12 @@
 #include "listaDados.h"
 #include "ordenaInterna.h"
 #include "merge.h"
+#include "split.h"
+#include "math.h"
 
 #define ERROR_ARG 1
 
-int err;
+int err = -1;
 
 int main(int argc, char** argv) {
 	if (argc < 2) return ERROR_ARG;
@@ -73,6 +75,19 @@ int main(int argc, char** argv) {
 	else if (!strcmp(argv[1], "6")) {
 		if (argc < 5) return ERROR_ARG;
 		if (err = !merge(argc-3, argv + 2, argv[argc-1])) {
+			printf("Arquivo gerado.\n");
+			return 0;
+		}
+		else {
+			printf("Falha no processamento.\n");
+			return err;
+		}
+	}
+
+	else if (!strcmp(argv[1], "7")) {
+		if (argc < 4) return ERROR_ARG;
+
+		if (err = !ordenaExterna(argv[2], argv[3])) {
 			printf("Arquivo gerado.\n");
 			return 0;
 		}

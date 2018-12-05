@@ -56,6 +56,7 @@ int ordenaInterna(char* srcname, char* destname) {
 	fwrite(&status, sizeof(int), 1, fdados);
 	fclose(fdados);
 	free(recordsv);
+	recordsv = NULL;
 
 	return 0;
 }
