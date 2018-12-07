@@ -7,6 +7,7 @@
 #include "merge.h"
 #include "split.h"
 #include "math.h"
+#include "ordenaExterna.h"
 
 #define ERROR_ARG 1
 
@@ -18,7 +19,7 @@ int main(int argc, char** argv) {
 	// Processar parametros de entrada do programa
 
 
-	// Comando 1
+	// Funcionalidade 1
 	if (!strcmp(argv[1],"1")) {
 		if (argc < 4) return ERROR_ARG;
 		if (err = !genDataFile(atoi(argv[3]), argv[2])) {
@@ -30,8 +31,8 @@ int main(int argc, char** argv) {
 			return err;
 		}
 	}
-	
-	// Comando 2
+
+	// Funcionalidade 2
 	else if (!strcmp(argv[1], "2")) {
 		if (argc < 3) return ERROR_ARG;
 		if (err = !listaDados(argv[2])) {
@@ -47,7 +48,7 @@ int main(int argc, char** argv) {
 		}
 	}
 
-	// Comando 3
+	// Funcionalidade 3
 	else if (!strcmp(argv[1], "3")) {
 		if (argc < 4) return ERROR_ARG;
 		if (err = !ordenaInterna(argv[2],argv[3])) {
@@ -60,6 +61,7 @@ int main(int argc, char** argv) {
 		}
 	}
 
+    // Funcionalidade 4
 	else if (!strcmp(argv[1], "4")) {
 		if (argc < 5) return ERROR_ARG;
 		if (err = !merge(2, argv + 2, argv[4])) {
@@ -71,7 +73,7 @@ int main(int argc, char** argv) {
 			return err;
 		}
 	}
-
+    // Funcionalidade 6
 	else if (!strcmp(argv[1], "6")) {
 		if (argc < 5) return ERROR_ARG;
 		if (err = !merge(argc-3, argv + 2, argv[argc-1])) {
@@ -83,7 +85,7 @@ int main(int argc, char** argv) {
 			return err;
 		}
 	}
-
+    // Funcionalidade 7
 	else if (!strcmp(argv[1], "7")) {
 		if (argc < 4) return ERROR_ARG;
 
