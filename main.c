@@ -1,3 +1,10 @@
+//*******************************************************
+// Trabalho Prático de Estruturas de Dados III          *
+// Grupo: 17                                            *
+// Samuel Libardi Godoy                 nºUSP:          *
+// Luis Eduardo Prado Santini           nºUSP: 9065750  *
+// Rafael Guilherme da Silva Tiburcio   nºUSP:          *
+//*******************************************************
 #include <stdlib.h>
 #include <stdio.h>
 #include "registro.h"
