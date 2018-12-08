@@ -4,7 +4,7 @@
 #include "asprintf.h"
 #include "merge.h"
 
-#define MAX_OPEN_FILES 256
+#define MAX_OPEN_FILES 4
 
 int ordenaExterna(char* srcname, char* destname) {
 	int splitc;
