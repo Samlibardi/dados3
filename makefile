@@ -1,5 +1,6 @@
 OBJS = \
  main.o \
+ match.o \
  ordenaExterna.o \
  split.o \
  ordenaInterna.o \

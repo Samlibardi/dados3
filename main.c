@@ -8,6 +8,7 @@
 #include "split.h"
 #include "math.h"
 #include "ordenaExterna.h"
+#include "match.h"
 
 #define ERROR_ARG 1
 
@@ -73,6 +74,24 @@ int main(int argc, char** argv) {
 			return err;
 		}
 	}
+
+	// Funcionalidade 5
+	else if (!strcmp(argv[1], "5")) {
+		if (argc < 5) return ERROR_ARG;
+		if (err = !match(2, argv + 2, argv[4])) {
+			//Ordena o arquivo de match usando a ordenação externa da funcionalidade 7
+			if (err = !ordenaExterna(argv[4], argv[4])) {
+				printf("Arquivo gerado.\n");
+				return 0;
+			}
+			return err;
+		}
+		else {
+			printf("Falha no processamento.\n");
+			return err;
+		}
+	}
+
     // Funcionalidade 6
 	else if (!strcmp(argv[1], "6")) {
 		if (argc < 5) return ERROR_ARG;
