@@ -3,6 +3,7 @@
 #include <math.h>
 #include "asprintf.h"
 #include "merge.h"
+#include "split.h"
 
 #define MAX_OPEN_FILES 4
 
@@ -35,7 +36,7 @@ int ordenaExterna(char* srcname, char* destname) {
 				if (err = merge((int)fmin(MAX_OPEN_FILES, srcsubc - i * MAX_OPEN_FILES), srcsubv + i * MAX_OPEN_FILES, destname))
 					return err;
 			}
-			
+
 			//Libera o espaço utilizado pela lista de subarquivos de origem
 			for (int i = 0; i < srcsubc; i++) {
 				free(srcsubv[i]);
@@ -46,7 +47,7 @@ int ordenaExterna(char* srcname, char* destname) {
 			// A lista de subarquivos de origem é agora a lista de subarquivos destino que acabaram de ser escritos
 			srcsubv = destsubv;
 			srcsubc = destsubc;
-			
+
 			// Repete essa operação até que se escreva apenas o arquivo final
 		} while (destsubc > 1);
 
